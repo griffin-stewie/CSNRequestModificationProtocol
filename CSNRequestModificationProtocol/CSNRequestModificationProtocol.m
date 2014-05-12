@@ -124,7 +124,9 @@ static char kInterestRulesKey;
 
 - (void)startLoading
 {
-    self.connection = [[NSURLConnection alloc] initWithRequest:[[self class] canonicalRequestForRequest:self.request] delegate:self startImmediately:YES];
+    self.connection = [[NSURLConnection alloc] initWithRequest:[[self class] canonicalRequestForRequest:self.request]
+                                                      delegate:self
+                                              startImmediately:YES];
 }
 
 - (void)stopLoading

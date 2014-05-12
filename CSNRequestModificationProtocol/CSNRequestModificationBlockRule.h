@@ -13,8 +13,11 @@ typedef BOOL(^CSNRequestModificationIsInterestRequestBlock)(NSURLRequest *reques
 typedef void(^CSNRequestModificationModifyRequestBlock)(NSURLRequest *request, NSMutableURLRequest *modifiedRequest);
 
 @interface CSNRequestModificationBlockRule : NSObject <CSNRequestModificationRule>
+
 @property (nonatomic, copy) CSNRequestModificationIsInterestRequestBlock isInterestRequestBlock;
 @property (nonatomic, copy) CSNRequestModificationModifyRequestBlock modifyRequestBlock;
+
 + (instancetype)ruleWithIsInterestRequestBlock:(CSNRequestModificationIsInterestRequestBlock)isInterestRequestBlock
                             modifyRequestBlock:(CSNRequestModificationModifyRequestBlock)modifyRequestBlock;
+
 @end
