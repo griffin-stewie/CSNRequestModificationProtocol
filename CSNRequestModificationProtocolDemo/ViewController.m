@@ -19,7 +19,7 @@
 {
     [super viewDidLoad];
     
-    NSURL *URL = [NSURL URLWithString:@"http://taruo.net/e/"];
+    NSURL *URL = [NSURL URLWithString:@"http://httpbin.org/headers"];
     [self.webView loadRequest:[NSURLRequest requestWithURL:URL]];
 }
 
