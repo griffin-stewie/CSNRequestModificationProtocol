@@ -49,7 +49,7 @@ static char kInterestRulesKey;
     dispatch_once(&onceToken, ^{
         _registeredRules = [[NSMutableArray alloc] init];
     });
-    
+
     return _registeredRules;
 }
 
@@ -61,14 +61,14 @@ static char kInterestRulesKey;
             [interestRules addObject:rule];
         }
     }
-    
+
     return [interestRules copy];
 }
 
 + (BOOL)hasRuleForRequest:(NSURLRequest *)request
 {
     NSArray *rules = [self interestRulesForRequest:request];
-    
+
     return ([rules count]) ? YES : NO;
 }
 
@@ -79,37 +79,36 @@ static char kInterestRulesKey;
 
 #pragma mark - NSURLProtocol
 
-+ (BOOL)canInitWithRequest:(NSURLRequest *)request {
-    
++ (BOOL)canInitWithRequest:(NSURLRequest *)request
+{
     if ([NSURLProtocol propertyForKey:kCSNRequestModificationProtocolModifiedPropertyKey inRequest:request]) {
         return NO;
     }
 
-    NSArray *rules = [self interestRulesForRequest:request];
-    
+    NSArray *interestRules = [self interestRulesForRequest:request];
+
     BOOL result = NO;
-    
-    if ([[[request URL] scheme] caseInsensitiveCompare:@"http"] == NSOrderedSame ||
-         [[[request URL] scheme] caseInsensitiveCompare:@"https"] == NSOrderedSame) {
-        result = ([rules count]) ? YES : NO;
+
+    if ([interestRules count]) {
+        NSString *scheme = [[request URL] scheme];
+        result = ([scheme caseInsensitiveCompare:@"http"] == NSOrderedSame || [scheme caseInsensitiveCompare:@"https"] == NSOrderedSame) ? YES : NO;
     }
-    
+
     if (result) {
-        [request csn_setInterestRules:rules];
+        [request csn_setInterestRules:interestRules];
     }
 
     return result;
 }
 
-+ (NSURLRequest *)canonicalRequestForRequest:(NSURLRequest *)request {
-    
++ (NSURLRequest *)canonicalRequestForRequest:(NSURLRequest *)request
+{
     NSURLRequest *req = [NSURLProtocol propertyForKey:kCSNRequestModificationProtocolModifiedPropertyKey inRequest:request];
     if (req) {
         return req;
     }
 
     NSArray *rules = [request csn_interestRules];
-//    NSArray *rules = [self interestRulesForRequest:request];
     NSMutableURLRequest *mutableRequest = [request mutableCopy];
 
     if ([rules count]) {
@@ -117,9 +116,9 @@ static char kInterestRulesKey;
             [rule modifyRequestForRequest:request modifiedRequest:mutableRequest];
         }
     }
-    
+
     [NSURLProtocol setProperty:@(YES) forKey:kCSNRequestModificationProtocolModifiedPropertyKey inRequest:mutableRequest];
-    
+
     return mutableRequest;
 }
 
