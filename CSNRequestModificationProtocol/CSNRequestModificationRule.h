@@ -9,6 +9,8 @@
 #import <Foundation/Foundation.h>
 
 @protocol CSNRequestModificationRule <NSObject>
+
 - (BOOL)isInterestRequest:(NSURLRequest *)request;
 - (void)modifyRequestForRequest:(NSURLRequest *)request modifiedRequest:(NSMutableURLRequest *)modifiedRequest;
+
 @end

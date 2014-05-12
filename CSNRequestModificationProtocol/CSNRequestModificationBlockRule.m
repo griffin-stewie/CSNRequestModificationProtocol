@@ -16,8 +16,10 @@
     CSNRequestModificationBlockRule *rule = [[[self class] alloc] init];
     rule.isInterestRequestBlock = isInterestRequestBlock;
     rule.modifyRequestBlock = modifyRequestBlock;
+
     return rule;
 }
+
 - (BOOL)isInterestRequest:(NSURLRequest *)request
 {
     if (self.isInterestRequestBlock) {

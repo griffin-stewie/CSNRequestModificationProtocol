@@ -10,5 +10,7 @@
 #import "CSNRequestModificationRule.h"
 
 @interface CSNRequestModificationProtocol : NSURLProtocol
+
 + (void)addRule:(id <CSNRequestModificationRule>)rule;
+
 @end
