@@ -103,11 +103,6 @@ static char kInterestRulesKey;
 
 + (NSURLRequest *)canonicalRequestForRequest:(NSURLRequest *)request
 {
-    NSURLRequest *req = [NSURLProtocol propertyForKey:kCSNRequestModificationProtocolModifiedPropertyKey inRequest:request];
-    if (req) {
-        return req;
-    }
-
     NSArray *rules = [request csn_interestRules];
     NSMutableURLRequest *mutableRequest = [request mutableCopy];
 
